@@ -14,45 +14,24 @@
             <i :class="menu.icon"></i>
             {{ menu.label }}
           </div>
-          <a-divider style="margin: 16px 0" />
-          <div class="title">作品</div>
-          <div
-            class="menu-item"
-            @click="onClickMenu('live_scene')"
-            :class="{ selected: selectedMenu === 'live_scene' }"
-          >
-            <i class="icon-moban_line"></i>
-            直播场景
-          </div>
-          <div
-            class="menu-item"
-            @click="onClickMenu('video_scene')"
-            :class="{ selected: selectedMenu === 'video_scene' }"
-          >
-            <i class="icon-shouji_line"></i>
-            混剪视频
-          </div>
         </div>
-        <!-- <div
+        <div
           class="menu-item"
           @click="onClickMenu('recycle_bin')"
           :class="{ selected: selectedMenu === 'recycle_bin' }"
         >
           <i class="icon-shanchu_line"></i>
           回收站
-        </div> -->
+        </div>
       </div>
-      <MaterialMain
-        v-if="menus.find((menu) => menu.value === selectedMenu)"
-        :selectedMenu="selectedMenu"
-      />
-      <ContentMain v-if="['live_scene','video_scene'].includes(selectedMenu)" :selectedMenu="selectedMenu" />
+      <MaterialMain :selectedMenu="selectedMenu" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref } from 'vue'
+  import { previewImage } from "@/components/PreviewImage/index"
   import MaterialMain from './components/MaterialMain.vue'
   import ContentMain from './components/ContentMain.vue'
 
@@ -60,7 +39,6 @@
     { label: '图片', value: 'dsops_img', icon: 'icon-tupian_line' },
     { label: '视频', value: 'dsops_video', icon: 'icon-shipin_line' },
     { label: '音频', value: 'dsops_audio', icon: 'icon-yinle_line' },
-    { label: '自动回复', value: 'dsops_auto_reply', icon: 'icon-QA_line' },
   ]
 
   const selectedMenu = ref('dsops_img')
@@ -70,10 +48,11 @@
   }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   .page-wrapper {
     height: 100%;
     padding: 16px;
+    box-sizing: border-box;
   }
   .page-container {
     height: 100%;

@@ -50,7 +50,7 @@
   }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   .folder-wrapper {
     width: 214px;
     height: 172px;

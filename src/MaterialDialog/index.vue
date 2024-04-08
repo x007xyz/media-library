@@ -309,7 +309,7 @@
   })
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   .upload-box {
     width: 792px;
     height: 170px;
@@ -334,7 +334,7 @@
   }
 </style>
 
-<style lang="less">
+<style lang="scss">
   .upload-file-thumb {
     width: 42px;
     height: 42px;

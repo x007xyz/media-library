@@ -41,7 +41,7 @@
   })
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
   .content {
     display: flex;
     flex-direction: column;

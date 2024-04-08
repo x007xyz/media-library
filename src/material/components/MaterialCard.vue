@@ -45,7 +45,6 @@
   import AudioImage from '/@/assets/images/audio.png'
   import AudioImage2 from '/@/assets/CreationSideIcon/音频@2x.png'
   import { createImgPreview } from '/@/components/Preview/index'
-  import { useSound } from '/@/hooks/web/useSound'
   import { Modal } from 'ant-design-vue'
 
   const props = defineProps<{
@@ -139,24 +138,7 @@
   }
 </script>
 
-<style scoped lang="less">
-  .preview-mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.4);
-
-    video {
-      max-height: 80%;
-      max-width: 80%;
-    }
-  }
+<style scoped lang="scss">
   
   .card-wrapper {
     width: 214px;

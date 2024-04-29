@@ -48,6 +48,7 @@
         <ImageMaterialCard v-for="item in images" :key="item.url" :item="item" @remove="onRemoveMaterial(item)"></ImageMaterialCard>
         <VideoMaterialCard v-for="item in videos" :key="item.url" :item="item" @remove="onRemoveMaterial(item)"></VideoMaterialCard>
         <AudioMaterialCard v-for="item in audios" :key="item.url" :item="item" @remove="onRemoveMaterial(item)"></AudioMaterialCard>
+        <img :src="imgUrl" alt="">
       </div>
     </div>
   </div>
@@ -84,6 +85,7 @@
   import VideoMaterialCard from './VideoMaterialCard.vue';
 import { selectFile } from '../../utils';
 import { getAudioInfo } from '@/utils/getAudioInfo';
+import { getVideoInfo } from '@/utils/getVideoInfo';
 
   // const instance = getCurrentInstance()
 
@@ -209,13 +211,23 @@ import { getAudioInfo } from '@/utils/getAudioInfo';
   //   { immediate: true },
   // )
 
+  const imgUrl = ref('')
+
   function onUpload() {
     const accept = { dsops_img: 'image/*', dsops_video: 'video/*', dsops_audio: 'audio/*' }
     selectFile({ multiple: true, accept: accept[selectedMenu.value] })
       .then((files) => {
-        getAudioInfo(files[0]).then(res => {
-          console.log(res)
-        })
+        if (selectedMenu.value === 'dsops_audio') {
+          getAudioInfo(files[0]).then(res => {
+            console.log(res)
+            imgUrl.value = res.cover
+          })
+        } else if (selectedMenu.value === 'dsops_video') {
+          getVideoInfo(files[0]).then(res => {
+            console.log(res)
+            imgUrl.value = res.cover
+          })
+        }
       })
   }
 

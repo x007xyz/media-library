@@ -74,6 +74,10 @@
     "downFile": "readonly",
     "getAudioMetaInfo": "readonly",
     "getAudioDuration": "readonly",
-    "getAudioInfo": "readonly"
+    "getAudioInfo": "readonly",
+    "getVideoCover": "readonly",
+    "getVideoInfo": "readonly",
+    "getVideoMetaInfo": "readonly",
+    "getVideoThumbs": "readonly"
   }
 }

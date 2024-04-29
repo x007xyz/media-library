@@ -82,6 +82,8 @@
   import ImageMaterialCard from './ImageMaterialCard.vue';
   import AudioMaterialCard from './AudioMaterialCard.vue';
   import VideoMaterialCard from './VideoMaterialCard.vue';
+import { selectFile } from '../../utils';
+import { getAudioInfo } from '@/utils/getAudioInfo';
 
   // const instance = getCurrentInstance()
 
@@ -207,25 +209,15 @@
   //   { immediate: true },
   // )
 
-  // function onUpload() {
-  //   const accept = { dsops_img: 'image/*', dsops_video: 'video/*', dsops_audio: 'audio/*' }
-  //   selectFile({ multiple: true, accept: accept[selectedMenu.value] })
-  //     .then((files) => {
-  //       return Promise.all(
-  //         files.map((file) =>
-  //           uploadFile(file, {
-  //             url: VITE_GLOB_UPLOAD_URL2,
-  //             body: {
-  //               libId: curFolderId.value,
-  //             },
-  //           }),
-  //         ),
-  //       )
-  //     })
-  //     .then(() => {
-  //       refreshData()
-  //     })
-  // }
+  function onUpload() {
+    const accept = { dsops_img: 'image/*', dsops_video: 'video/*', dsops_audio: 'audio/*' }
+    selectFile({ multiple: true, accept: accept[selectedMenu.value] })
+      .then((files) => {
+        getAudioInfo(files[0]).then(res => {
+          console.log(res)
+        })
+      })
+  }
 
   // const addQAModalRef = ref(null)
 

@@ -71,6 +71,9 @@
     "renderComp": "readonly",
     "useScrollLoad": "readonly",
     "useSound": "readonly",
-    "downFile": "readonly"
+    "downFile": "readonly",
+    "getAudioMetaInfo": "readonly",
+    "getAudioDuration": "readonly",
+    "getAudioInfo": "readonly"
   }
 }

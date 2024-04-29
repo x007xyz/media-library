@@ -1,13 +1,13 @@
-import { getToken } from '/@/utils/auth'
-import { useTenantStore } from '/@/store/modules/tenant'
-import { getAppEnvConfig } from '/@/utils/env'
-import FontFaceObserver from 'fontfaceobserver'
-import fontJson from './free-font.json'
-import { message } from 'ant-design-vue'
+// import { getToken } from '/@/utils/auth'
+// import { useTenantStore } from '/@/store/modules/tenant'
+// import { getAppEnvConfig } from '/@/utils/env'
+// import FontFaceObserver from 'fontfaceobserver'
+// import fontJson from './free-font.json'
+// import { message } from 'ant-design-vue'
 
-const { VITE_GLOB_UPLOAD_URL } = getAppEnvConfig()
+// const { VITE_GLOB_UPLOAD_URL } = getAppEnvConfig()
 
-const tenantStore = useTenantStore()
+// const tenantStore = useTenantStore()
 
 interface FileUploadOptions {
   accept: string
@@ -40,11 +40,11 @@ export const selectFile = (options: FileUploadOptions): Promise<File[]> => {
         })
         if (files && files.length > 0) {
           if (length !== files.length) {
-            message.warning(`已过滤上传文件中大小大于${options.max}的文件`)
+            // message.warning(`已过滤上传文件中大小大于${options.max}的文件`)
           }
           resolve(files)
         } else {
-          message.warning(`上传文件大小不能大于${options.max}`)
+          // message.warning(`上传文件大小不能大于${options.max}`)
           reject(new Error(`上传文件大小不能大于${options.max}`))
         }
       } else {
@@ -217,19 +217,4 @@ export function base64ToBlob(base64Data, contentType) {
 export function blobToFile(blob, fileName) {
   const file = new File([blob], fileName, { type: blob.type })
   return file
-}
-
-const fontList = fontJson
-
-// 下载贴图字体
-export function downStickerFont(layers) {
-  return Promise.all(
-    layers.map((item: any) => {
-      if (item.fontFamily && fontList.find((font) => font.name === item.fontFamily)) {
-        const font = new FontFaceObserver(item.fontFamily)
-        return font.load(null, 150000)
-      }
-      return Promise.resolve()
-    }),
-  )
 }

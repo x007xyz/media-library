@@ -1,14 +1,3 @@
-// import { getToken } from '/@/utils/auth'
-// import { useTenantStore } from '/@/store/modules/tenant'
-// import { getAppEnvConfig } from '/@/utils/env'
-// import FontFaceObserver from 'fontfaceobserver'
-// import fontJson from './free-font.json'
-// import { message } from 'ant-design-vue'
-
-// const { VITE_GLOB_UPLOAD_URL } = getAppEnvConfig()
-
-// const tenantStore = useTenantStore()
-
 interface FileUploadOptions {
   accept: string
   multiple: boolean
@@ -27,7 +16,7 @@ export const selectFile = (options: FileUploadOptions): Promise<File[]> => {
       : input.removeAttribute('multiple')
     // 绑定事件
     input.onchange = function () {
-      let files = Array.from(this.files)
+      let files: File[] = Array.from(input.files || [])
       // 获取文件列表
       if (files) {
         const length = files.length
@@ -72,105 +61,6 @@ export const fileAsDataUrl = (file: File): Promise<string> => {
   })
 }
 
-let loadingQueue = []
-
-let hideLoading
-
-let failureCount = 0
-
-function showLoading() {
-  if (loadingQueue.length === 0) {
-    hideLoading = message.loading('文件上传中...', 0)
-  }
-
-  const uuid = Math.random().toString(36).substr(2)
-  loadingQueue.push(uuid)
-  console.log('🚀 ~ showLoading ~ loadingQueue:', loadingQueue)
-
-  return function (flag: boolean) {
-    console.log('uuid', uuid)
-    if (!flag) {
-      failureCount++
-    }
-    if (uuid) {
-      loadingQueue = loadingQueue.filter((item) => uuid !== item)
-    }
-    if (loadingQueue.length === 0) {
-      hideLoading()
-      if (failureCount > 0) {
-        message.error(failureCount + '个文件上传失败')
-      } else {
-        message.success('文件上传成功')
-      }
-      failureCount = 0
-    }
-  }
-}
-
-interface UploadOptions {
-  url?: string
-  onProgress?: Function
-  showToastFn?: Function
-  body?: Record<string, any>
-}
-
-// 上传文件并获取URL
-export const uploadFile = (file: File, options?: UploadOptions): Promise<string> => {
-  const { url, onProgress, showToastFn } = Object.assign(
-    {},
-    {
-      url: VITE_GLOB_UPLOAD_URL,
-      showToastFn: showLoading,
-    },
-    options,
-  )
-  const hide = showToastFn && showToastFn()
-  const formData = new FormData()
-  formData.append('file', file)
-
-  if (options?.body) {
-    for (const key in options.body) {
-      formData.append(key, options.body[key])
-    }
-  }
-
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    // 为请求设置headers
-    xhr.open('POST', url)
-    xhr.setRequestHeader('Authorization', getToken())
-    xhr.setRequestHeader('appCode', 'dsops')
-    xhr.setRequestHeader('tenantId', tenantStore.getTenantVal)
-    xhr.setRequestHeader('Org-Type', tenantStore.getOrgType)
-    xhr.setRequestHeader('Org-Id', tenantStore.getOrgId)
-    xhr.onload = () => {
-      hide && hide(true)
-      const response = JSON.parse(xhr.responseText)
-      if (xhr.status === 200) {
-        resolve(response.data)
-      } else {
-        reject(response)
-      }
-    }
-    xhr.upload.onprogress = (event) => {
-      console.log('🚀 ~ returnnewPromise ~ event:', event)
-      if (event.lengthComputable) {
-        const percentComplete = ((event.loaded / event.total) * 100).toFixed(0)
-        onProgress && onProgress(percentComplete)
-      }
-    }
-    xhr.onerror = () => {
-      hide && hide(false)
-      reject(xhr.statusText)
-    }
-    xhr.send(formData)
-  })
-}
-
-export const getVideoCoverUrl = (url: string) => {
-  return url + '?x-oss-process=video/snapshot,t_0,f_png,m_fast'
-}
-
 // 计算文件大小
 export const getFileSize = (size: number): string => {
   if (!size) return '0 B'
@@ -192,7 +82,7 @@ export const compareSize = (size: number, target: string): boolean => {
 }
 
 // 将Base64数据转换为Blob对象
-export function base64ToBlob(base64Data, contentType) {
+export function base64ToBlob(base64Data: string, contentType: string) {
   contentType = contentType || ''
   const sliceSize = 1024
   const byteCharacters = atob(base64Data)
@@ -214,7 +104,7 @@ export function base64ToBlob(base64Data, contentType) {
 }
 
 // 将Blob对象转换为File对象
-export function blobToFile(blob, fileName) {
+export function blobToFile(blob: Blob, fileName: string) {
   const file = new File([blob], fileName, { type: blob.type })
   return file
 }

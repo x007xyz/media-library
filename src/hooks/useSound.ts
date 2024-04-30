@@ -25,9 +25,11 @@ export const useSound = () => {
       audio?.pause()
       setTimeout(() => {
         playingUrl.value = src
-        // 设置音频文件的 URL
-        audio.src = src
-        audio?.play()
+        if (audio) {
+          // 设置音频文件的 URL
+          audio.src = src
+          audio.play()
+        }
       }, 100)
     } else {
       playingUrl.value = ''

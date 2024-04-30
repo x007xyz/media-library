@@ -1,10 +1,10 @@
-import { useInfiniteScroll } from '@vueuse/core'
+import { UseInfiniteScrollOptions, useInfiniteScroll } from '@vueuse/core'
 import { ref } from 'vue'
 
-export const useScrollLoad = (el, loadMore, options) => {
+export const useScrollLoad = (el: any, loadMore: (arg0: { pageSize: any; pageIndex: number }) => Promise<any>, options: { pageSize: number, immediate: boolean } & UseInfiniteScrollOptions<any>) => {
   const list = ref([])
 
-  const pageSize = options.pageSize || 10
+  const pageSize = options?.pageSize || 10
   let pageIndex = 1
   let finished = false
   let loading = false

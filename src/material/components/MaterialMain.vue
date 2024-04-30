@@ -5,7 +5,7 @@
         {{ selectedMenuLabel }}
       </div>
       <div style="display: flex">
-        <SearchInput></SearchInput>
+        <!-- <SearchInput></SearchInput> -->
         <a-button @click="onUpload">
           <upload-outlined />
           上传{{ selectedMenuLabel }}

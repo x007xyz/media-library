@@ -39,6 +39,7 @@
   import { selectFile, getFileSize } from '@/utils';
   import { getAudioInfo } from '@/utils/getAudioInfo';
   import { getVideoInfo } from '@/utils/getVideoInfo';
+import AudioImage from '@/assets/audio.png';
 
   const props = defineProps<{ selectedMenu: string }>()
 
@@ -72,7 +73,7 @@
     getAudioInfo(file).then(res => {
       audioArr.value.push({
         url: URL.createObjectURL(file),
-        cover: res.cover || require('@/assets/audio.png'),
+        cover: res.cover || AudioImage,
         name: res.name,
         desc: [res.artist, formatDuration(res.duration)].join(' | ')
       })

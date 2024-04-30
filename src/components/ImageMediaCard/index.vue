@@ -1,17 +1,13 @@
 <template>
-  <div class="card-wrapper">
-    <div class="content" @click="onClick">
-      <img :src="item.coverImg" alt="" />
+  <div class="card-wrapper" @click="onClick">
+    <div class="content">
+      <img :src="item.cover" alt="" />
       <div class="handle">
         <div>
         </div>
         <div>
           <i class="icon-xiazai_line" @click.stop="onDownFile"></i>
           <i class="icon-shanchu_line" @click.stop="onRemove"></i>
-          <a-tooltip>
-            <template #title> <div v-html="item.tooltip"></div></template>
-            <i class="icon-xiangqing_line"></i>
-          </a-tooltip>
         </div>
       </div>
     </div>
@@ -23,28 +19,21 @@
 </template>
 
 <script setup lang="ts">
-  import { Modal } from 'ant-design-vue'
-  import { MaterialItem } from '../index';
-  import { previewImage } from '@/components/PreviewImage';
+  import { previewImage } from '../PreviewImage';
 
   const props = defineProps<{
     item: MaterialItem
   }>()
 
-  const emits = defineEmits(['remove'])
+  const emits = defineEmits(['click', 'remove'])
 
   const onClick = () => {
+    emits('click')
     previewImage(props.item.url)
   }
 
   const onRemove = () => {
-    Modal.confirm({
-      title: '确认删除',
-      content: '确认删除该素材吗？',
-      onOk: () => {
-        emits('remove')
-      },
-    })
+    emits('remove')
   }
 
   const onDownFile = () => {
@@ -53,6 +42,12 @@
 </script>
 
 <style scoped lang="scss">
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   
   .card-wrapper {
     width: 214px;

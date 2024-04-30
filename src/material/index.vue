@@ -15,14 +15,14 @@
             {{ menu.label }}
           </div>
         </div>
-        <div
+        <!-- <div
           class="menu-item"
           @click="onClickMenu('recycle_bin')"
           :class="{ selected: selectedMenu === 'recycle_bin' }"
         >
           <i class="icon-shanchu_line"></i>
           回收站
-        </div>
+        </div> -->
       </div>
       <MaterialMain :selectedMenu="selectedMenu" />
     </div>
@@ -31,17 +31,15 @@
 
 <script setup lang="ts">
   import { ref } from 'vue'
-  import { previewImage } from "@/components/PreviewImage/index"
   import MaterialMain from './components/MaterialMain.vue'
-  import ContentMain from './components/ContentMain.vue'
 
   const menus = [
-    { label: '图片', value: 'dsops_img', icon: 'icon-tupian_line' },
-    { label: '视频', value: 'dsops_video', icon: 'icon-shipin_line' },
-    { label: '音频', value: 'dsops_audio', icon: 'icon-yinle_line' },
+    { label: '图片', value: 'image', icon: 'icon-tupian_line' },
+    { label: '视频', value: 'video', icon: 'icon-shipin_line' },
+    { label: '音频', value: 'audio', icon: 'icon-yinle_line' },
   ]
 
-  const selectedMenu = ref('dsops_img')
+  const selectedMenu = ref('image')
 
   const onClickMenu = (menu: string) => {
     selectedMenu.value = menu

@@ -1,18 +1,15 @@
 <template>
-  <div class="card-wrapper">
-    <div class="content" @click="onClick">
-      <img :src="item.coverImg" alt="" />
+  <div class="card-wrapper" @click="onClick">
+    <div class="content">
+      <img :src="item.cover" alt="" />
       <div class="handle">
         <div>
-          <i class="icon-bofang_fill"></i>
+          <i class="icon-zanting_fill" v-if="playingUrl === item.url"></i>
+          <i class="icon-bofang_fill" v-else></i>
         </div>
         <div>
           <i class="icon-xiazai_line" @click.stop="onDownFile"></i>
           <i class="icon-shanchu_line" @click.stop="onRemove"></i>
-          <a-tooltip>
-            <template #title> <div v-html="item.tooltip"></div></template>
-            <i class="icon-xiangqing_line"></i>
-          </a-tooltip>
         </div>
       </div>
     </div>
@@ -24,28 +21,21 @@
 </template>
 
 <script setup lang="ts">
-  import { Modal } from 'ant-design-vue'
-  import { MaterialItem } from '../index';
-  import { previewVideo } from '@/components/PreviewVideo';
-
   const props = defineProps<{
     item: MaterialItem
   }>()
 
-  const emits = defineEmits(['remove'])
+  const emits = defineEmits(['click', 'remove'])
+
+  const { toggle, playingUrl } = useSound()
 
   const onClick = () => {
-    previewVideo(props.item.url)
+    toggle(props.item.url)
+    emits('click')
   }
 
   const onRemove = () => {
-    Modal.confirm({
-      title: '确认删除',
-      content: '确认删除该素材吗？',
-      onOk: () => {
-        emits('remove')
-      },
-    })
+    emits('remove')
   }
 
   const onDownFile = () => {
@@ -54,6 +44,12 @@
 </script>
 
 <style scoped lang="scss">
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   
   .card-wrapper {
     width: 214px;

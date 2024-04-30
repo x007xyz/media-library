@@ -3,16 +3,6 @@
     <div class="header">
       <div class="title">
         {{ selectedMenuLabel }}
-        <!-- <a-breadcrumb style="cursor: pointer">
-          <a-breadcrumb-item @click="jumpToFolder(-1)">{{ selectedMenuLabel }}</a-breadcrumb-item>
-          <a-breadcrumb-item
-            v-for="(item, index) in folderPaths"
-            :key="item.libId"
-            @click="jumpToFolder(index)"
-          >
-            {{ item['libName'] }}
-          </a-breadcrumb-item>
-        </a-breadcrumb> -->
       </div>
       <div style="display: flex">
         <SearchInput></SearchInput>
@@ -27,235 +17,104 @@
         <img src="@/assets/empty.png" alt="" />
         <span>暂时还没有内容</span>
       </div> -->
-      <!-- <div v-if="list.length" class="card-grid">
-        <FolderCard
-          v-for="item in list1"
-          :key="item.libId"
-          :item="item"
-          @click="enterFolder(item)"
-          @remove="onRemoveFolder(item)"
-          @rename="onRenameFolder(item)"
-          @check="onCheckFolder(item)"
-        />
-      </div> -->
       <div class="card-grid">
-        <!-- <MaterialCard
-          v-for="item in list2"
-          :key="item.materialId"
-          :item="item"
-          @remove="onRemoveMaterial(item)"
-        /> -->
-        <ImageMaterialCard v-for="item in images" :key="item.url" :item="item" @remove="onRemoveMaterial(item)"></ImageMaterialCard>
-        <VideoMaterialCard v-for="item in videos" :key="item.url" :item="item" @remove="onRemoveMaterial(item)"></VideoMaterialCard>
-        <AudioMaterialCard v-for="item in audios" :key="item.url" :item="item" @remove="onRemoveMaterial(item)"></AudioMaterialCard>
-        <img :src="imgUrl" alt="">
+        <template v-if="selectedMenu === 'audio'">
+          <AudioMediaCard v-for="item in audioArr" :item="item" @remove="onRemove(item)"></AudioMediaCard>
+          <AudioMediaRow v-for="item in audioArr" :key="item.url" :item="item" @remove="onRemove(item)"></AudioMediaRow>
+        </template>
+        <template v-if="selectedMenu === 'image'">
+          <ImageMediaCard v-for="item in imageArr" :item="item" @remove="onRemove(item)"></ImageMediaCard>
+          <ImageMediaRow v-for="item in imageArr" :key="item.url" :item="item" @remove="onRemove(item)"></ImageMediaRow>
+        </template>
+        <template v-if="selectedMenu === 'video'">
+          <VideoMediaCard v-for="item in videoArr" :item="item" @remove="onRemove(item)"></VideoMediaCard>
+          <VideoMediaRow v-for="item in videoArr" :key="item.url" :item="item" @remove="onRemove(item)"></VideoMediaRow>
+        </template>
       </div>
     </div>
   </div>
-  <!-- <FolderDialog ref="folderDialogRef" /> -->
-  <!-- <addQAModal ref="addQAModalRef" /> -->
-  <!-- <FolderInfoDialog ref="folderInfoDialogRef" /> -->
 </template>
 
 <script setup lang="ts">
-  // import MaterialCard from './MaterialCard.vue'
-  // import FolderCard from './FolderCard.vue'
-  // // import { UploadOutlined, PlusOutlined } from '@ant-design/icons-vue'
-  // import SearchInput from '@/components/SearchInput/index.vue'
-  // import { computed, ref, defineProps, watch, getCurrentInstance } from 'vue'
-  // import {
-  //   selectFile,
-  //   uploadFile,
-  // } from '@/utils'
-  // // import { getAppEnvConfig } from '/@/utils/env'
-  // import { useScrollLoad } from '../useScrollLoad'
-  // import FolderDialog from './FolderDialog.vue'
-  // import FolderInfoDialog from './FolderInfoDialog.vue'
-  // // import {
-  // //   createAutoReply,
-  // //   createMaterialDir,
-  // //   deleteMaterial,
-  // //   deleteMaterialDir,
-  // //   renameMaterialDir,
-  // // } from '/@/api/material'
-  // import addQAModal from './addQAModal.vue'
-  import { MaterialItem } from '../index';
-  import ImageMaterialCard from './ImageMaterialCard.vue';
-  import AudioMaterialCard from './AudioMaterialCard.vue';
-  import VideoMaterialCard from './VideoMaterialCard.vue';
-import { selectFile } from '../../utils';
-import { getAudioInfo } from '@/utils/getAudioInfo';
-import { getVideoInfo } from '@/utils/getVideoInfo';
+  import { selectFile, getFileSize } from '@/utils';
+  import { getAudioInfo } from '@/utils/getAudioInfo';
+  import { getVideoInfo } from '@/utils/getVideoInfo';
 
-  // const instance = getCurrentInstance()
-
-  // console.log('getCurrentInstance', instance)
   const props = defineProps<{ selectedMenu: string }>()
 
   const selectedMenu = computed(() => props.selectedMenu)
 
-  const videos: MaterialItem[] = [{ coverImg: "https://oss-odds-digital-asset-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/eds/9s21df6e-1234-4596-adac-a920ds6afd322/dsops/upload/4befec5a-2785-435b-bd63-17e3b9f8a275_20240325174732.mp4?x-oss-process=video/snapshot,t_0,f_png,m_fast",
-    name: "视频1",
-    desc: "视频描述1",
-    url: "https://oss-odds-digital-asset-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/eds/9s21df6e-1234-4596-adac-a920ds6afd322/dsops/upload/4befec5a-2785-435b-bd63-17e3b9f8a275_20240325174732.mp4"
-,
-    tooltip: '上传人：陈01<br/>上传时间：2024-03-15 16:31:31'
-  }];
-
-  const images: MaterialItem[] = [{ coverImg: "https://oss-odds-digital-asset-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/eds/9s21df6e-1234-4596-adac-a920ds6afd322/dsops/upload/e840b99cd5db42759fbf5570b7671670_20240315163131.png",
-    name: "图片1",
-    desc: "图片描述1",
-    url: "https://oss-odds-digital-asset-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/eds/9s21df6e-1234-4596-adac-a920ds6afd322/dsops/upload/e840b99cd5db42759fbf5570b7671670_20240315163131.png",
-    tooltip: '上传人：陈01<br/>上传时间：2024-03-15 16:31:31'
-  }];
-
-  const audios: MaterialItem[] = [{
-    name: "图片1",
-    desc: "图片描述1",
-    url: "https://oss-odds-digital-asset-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/eds/9s21df6e-1234-4596-adac-a920ds6afd322/dsops/upload/华语群星 - 笑旺新年_20240315163738.mp3"
-,
-    tooltip: '上传人：陈01<br/>上传时间：2024-03-15 16:31:31'
-  }];
-
-  // const keyword = ref<string>('')
-
-  // function onSearch() {
-  //   refreshData()
-  // }
-
-  // const folderDialogRef = ref(null)
-
-  // function onCreateFolder() {
-  //   folderDialogRef.value.open('', (text) => {
-  //     createMaterialDir({
-  //       libName: text,
-  //       topicId: selectedMenu.value,
-  //       libId: curFolderId.value,
-  //     }).then(() => {
-  //       refreshData()
-  //     })
-  //   })
-  // }
-
-  // function onRenameFolder(item) {
-  //   folderDialogRef.value.open({ text: item.libName }, (text) => {
-  //     renameMaterialDir({
-  //       libName: text,
-  //       libId: item.libId,
-  //     }).then(() => {
-  //       refreshData()
-  //     })
-  //   })
-  // }
-
-  // const folderInfoDialogRef = ref(null)
-
-  // function onCheckFolder(item) {
-  //   folderInfoDialogRef.value.open(item)
-  // }
-
-  // function onRemoveFolder(item) {
-  //   deleteMaterialDir({ libId: item.libId }).then(() => {
-  //     refreshData()
-  //   })
-  // }
-
-  // const { VITE_GLOB_UPLOAD_URL2 } = getAppEnvConfig()
-
   const scrollRef = ref(null)
 
-  // const folderPaths = ref([])
-
-  // const curFolderId = computed(() => {
-  //   if (folderPaths.value.length === 0) {
-  //     return ''
-  //   }
-  //   return folderPaths.value[folderPaths.value.length - 1].libId
-  // })
-  // function enterFolder(folder) {
-  //   folderPaths.value.push(folder)
-  //   refreshData()
-  // }
-
-  // function jumpToFolder(index) {
-  //   folderPaths.value = folderPaths.value.slice(0, index + 1)
-  //   refreshData()
-  // }
+  function onRemove (item: MaterialItem) {
+    console.log('onRemove', item)
+  }
 
   const menus = [
-    { label: '图片', value: 'dsops_img', icon: 'icon-tupian_line' },
-    { label: '视频', value: 'dsops_video', icon: 'icon-shipin_line' },
-    { label: '音频', value: 'dsops_audio', icon: 'icon-yinle_line' },
+    { label: '图片', value: 'image', icon: 'icon-tupian_line' },
+    { label: '视频', value: 'video', icon: 'icon-shipin_line' },
+    { label: '音频', value: 'audio', icon: 'icon-yinle_line' },
   ]
-
-  // function onRemoveMaterial(data) {
-  //   deleteMaterial({ materialId: data.materialId }).then(() => {
-  //     refreshData()
-  //   })
-  // }
 
   const selectedMenuLabel = computed(() => {
     return menus.find((menu) => menu.value === selectedMenu.value)?.label
   })
 
-  // const { list, refresh } = useScrollLoad(scrollRef, {})
+  function formatDuration(duration: number) {
+    const minutes = Math.floor(duration / 60).toString().padStart(2, '0')
+    const seconds = Math.round(duration % 60).toString().padStart(2, '0')
+    return `${minutes}:${seconds}`
+  }
 
-  const list = []
+  const audioArr = ref<MaterialItem[]>([])
 
-  // watch(
-  //   selectedMenu,
-  //   () => {
-  //     folderPaths.value = []
-  //     refreshData()
-  //   },
-  //   { immediate: true },
-  // )
+  function addAudio(file: File) {
+    getAudioInfo(file).then(res => {
+      audioArr.value.push({
+        url: URL.createObjectURL(file),
+        cover: res.cover || require('@/assets/audio.png'),
+        name: res.name,
+        desc: [res.artist, formatDuration(res.duration)].join(' | ')
+      })
+    })
+  }
 
-  const imgUrl = ref('')
+  const videoArr = ref<MaterialItem[]>([])
+
+  function addVideo(file: File) {
+    getVideoInfo(file).then(res => {
+      videoArr.value.push({
+        url: URL.createObjectURL(file),
+        cover: res.cover,
+        name: res.name,
+        desc: [getFileSize(file.size), formatDuration(res.duration)].join(' | ')
+      })
+    })
+  }
+
+  const imageArr = ref<MaterialItem[]>([])
+
+  function addImage(file: File) {
+    imageArr.value.push({
+      url: URL.createObjectURL(file),
+      cover: URL.createObjectURL(file),
+      name: file.name,
+      desc: getFileSize(file.size)
+    })
+  }
 
   function onUpload() {
-    const accept = { dsops_img: 'image/*', dsops_video: 'video/*', dsops_audio: 'audio/*' }
-    selectFile({ multiple: true, accept: accept[selectedMenu.value] })
+    selectFile({ multiple: false, accept: `${selectedMenu.value}/*` })
       .then((files) => {
-        if (selectedMenu.value === 'dsops_audio') {
-          getAudioInfo(files[0]).then(res => {
-            console.log(res)
-            imgUrl.value = res.cover
-          })
-        } else if (selectedMenu.value === 'dsops_video') {
-          getVideoInfo(files[0]).then(res => {
-            console.log(res)
-            imgUrl.value = res.cover
-          })
+        if (selectedMenu.value === 'audio') {
+          addAudio(files[0])
+        } else if (selectedMenu.value === 'video') {
+          addVideo(files[0])
+        } else {
+          addImage(files[0])
         }
       })
   }
-
-  // const addQAModalRef = ref(null)
-
-  // function onAutoReply() {
-  //   addQAModalRef.value.open({}, (data) => {
-  //     console.log('🚀 ~ addQAModalRef.value.open ~ data:', data)
-  //     createAutoReply({
-  //       materialName: data.materialName,
-  //       materialUrl: data.materialUrl,
-  //       metaInfo: {
-  //         size: data.audio.size,
-  //         duration: data.audio.duration,
-  //         keywords: data.keywords,
-  //       },
-  //       extendInfo: {
-  //         urlTitle: data.audio.title,
-  //       },
-  //     }).then(() => {
-  //       refreshData()
-  //     })
-  //   })
-  // }
-
-  // function refreshData() {
-  //   refresh(selectedMenu.value, { libId: curFolderId.value, keyword: keyword.value })
-  // }
 </script>
 
 <style scoped lang="scss">

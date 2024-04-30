@@ -6,6 +6,7 @@ import AutoImport from "unplugin-auto-import/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   resolve: {
     alias: {
       '@': __dirname + '/src', // 设置 '@' 指向 'src' 目录

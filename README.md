@@ -14,4 +14,9 @@
 
 ## 演示地址
 
-[demo](https://x007xyz.github.io/vue-media-library/)
+[demo](https://x007xyz.github.io/media-library/)
+
+## TODO
+
+[] 发布为npm包
+[] 生成文档

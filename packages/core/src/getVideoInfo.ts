@@ -1,4 +1,4 @@
-import { fileAsDataUrl } from "../utils";
+import { fileAsDataUrl } from "./utils";
 
 interface VideoInfo {
   name: string;

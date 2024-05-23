@@ -1,3 +1,4 @@
+import "@/assets/iconfont/iconfont.css"
 import AudioMediaCard from './components/AudioMediaCard/index.vue'
 import AudioMediaRow from './components/AudioMediaRow/index.vue'
 import ImageMediaCard from './components/ImageMediaCard/index.vue'
@@ -24,6 +25,6 @@ export {
   VideoMediaRow
 }
 // 导出hooks
-import { useSound } from './hooks/useSound'
+// import { useSound } from './hooks/useSound'
 
-export { useSound }
+// export { useSound }

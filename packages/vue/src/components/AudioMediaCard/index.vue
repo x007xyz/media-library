@@ -4,6 +4,8 @@
       <img :src="item.cover" alt="" />
       <div class="handle">
         <div>
+          <i class="icon-zanting_fill" v-if="playingUrl === item.url"></i>
+          <i class="icon-bofang_fill" v-else></i>
         </div>
         <div>
           <i class="icon-xiazai_line" @click.stop="onDownFile"></i>
@@ -19,13 +21,19 @@
 </template>
 
 <script setup lang="ts">
+import { downFile } from '@media-library/core';
+import { useSound } from '../../hooks/useSound';
+
   const props = defineProps<{
     item: MaterialItem
   }>()
 
   const emits = defineEmits(['click', 'remove'])
 
+  const { toggle, playingUrl } = useSound()
+
   const onClick = () => {
+    toggle(props.item.url)
     emits('click')
   }
 

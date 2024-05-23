@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { useSound } from '@/hooks/useSound';
+
 
 const props = defineProps({
   item: {

@@ -19,7 +19,8 @@
 </template>
 
 <script setup lang="ts">
-  import { previewImage } from '../PreviewImage';
+  import { downFile } from "@media-library/core"
+  import { previewVideo } from '../PreviewVideo';
 
   const props = defineProps<{
     item: MaterialItem
@@ -29,7 +30,7 @@
 
   const onClick = () => {
     emits('click')
-    previewImage(props.item.url)
+    previewVideo(props.item.url)
   }
 
   const onRemove = () => {

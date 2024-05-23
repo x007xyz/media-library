@@ -37,9 +37,9 @@
 
 <script setup lang="ts">
   import { selectFile, getFileSize } from '@/utils';
-  import { getAudioInfo } from '@/utils/getAudioInfo';
-  import { getVideoInfo } from '@/utils/getVideoInfo';
-import AudioImage from '@/assets/audio.png';
+  import { getAudioInfo, getVideoInfo } from '@media-library/core';
+  import { VideoMediaCard } from "@media-library/vue"
+  import AudioImage from '@/assets/audio.png';
 
   const props = defineProps<{ selectedMenu: string }>()
 

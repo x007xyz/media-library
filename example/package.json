@@ -1,29 +1,23 @@
 {
-  "name": "@media-library/vue",
+  "name": "example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/media-library-vue.umd.js",
-  "module": "dist/media-library-vue.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/media-library-vue.es.js",
-      "require": "./dist/media-library-vue.umd.js"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@media-library/core": "workspace:^",
-    "@vueuse/core": "^10.9.0",
+    "@media-library/core": "file:../packages/core",
+    "@media-library/vue": "file:../packages/vue",
     "vue": "^3.4.27"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
+    "unplugin-auto-import": "^0.17.6",
+    "unplugin-vue-components": "^0.27.0",
     "vite": "^5.2.0",
     "vue-tsc": "^2.0.6"
   }

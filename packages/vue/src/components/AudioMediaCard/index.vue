@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { downFile } from '@media-library/core';
+import { downFile } from '@web-media-library/core';
 import { useSound } from '../../hooks/useSound';
 
   const props = defineProps<{

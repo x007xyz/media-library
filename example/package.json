@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@media-library/core": "file:../packages/core",
-    "@media-library/vue": "file:../packages/vue",
+    "@web-media-library/core": "file:../packages/core",
+    "@web-media-library/vue": "file:../packages/vue",
     "vue": "^3.4.27"
   },
   "devDependencies": {

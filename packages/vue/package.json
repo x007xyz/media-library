@@ -1,5 +1,5 @@
 {
-  "name": "@media-library/vue",
+  "name": "@web-media-library/vue",
   "private": false,
   "version": "1.0.0",
   "type": "module",
@@ -21,7 +21,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@media-library/core": "workspace:^",
+    "@web-media-library/core": "workspace:^",
     "@vueuse/core": "^10.9.0",
     "vue": "^3.4.27"
   },

@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { downFile } from '@media-library/core';
+import { downFile } from '@web-media-library/core';
 
   const props = defineProps<{
     item: MaterialItem

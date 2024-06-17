@@ -1,7 +1,7 @@
 {
   "name": "@web-media-library/vue",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.0.8",
   "type": "module",
   "files": [
     "dist"
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
-    "@web-media-library/core": "^1.0.5",
+    "@web-media-library/core": "^1.0.8",
     "vue": "^3.4.27"
   },
   "devDependencies": {
@@ -31,5 +31,9 @@
     "vite": "^5.2.0",
     "vue-tsc": "^2.0.6"
   },
-  "gitHead": "5906309d90a1d7a4d91f7595feb94b6a91ade579"
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "gitHead": "e38b9dd5fbaae3fd32b12574e6232278d0878c8a"
 }

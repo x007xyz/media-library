@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r run build",
-    "release": "lerna version"
+    "release": "lerna version",
+    "publish": "lerna publish --force-publish"
   },
   "author": "",
   "license": "ISC",

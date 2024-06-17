@@ -1,7 +1,7 @@
 {
   "name": "@web-media-library/vue",
   "private": false,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "files": [
     "dist"
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
-    "@web-media-library/core": "workspace:^",
+    "@web-media-library/core": "^1.0.3",
     "vue": "^3.4.27"
   },
   "devDependencies": {
@@ -30,5 +30,6 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vue-tsc": "^2.0.6"
-  }
+  },
+  "gitHead": "45c7f41fcef0bf9dfffe22a0364bdd887270ad5d"
 }

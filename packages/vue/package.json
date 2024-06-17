@@ -1,7 +1,7 @@
 {
   "name": "@web-media-library/vue",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "files": [
     "dist"
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
-    "@web-media-library/core": "^1.0.3",
+    "@web-media-library/core": "^1.0.4",
     "vue": "^3.4.27"
   },
   "devDependencies": {

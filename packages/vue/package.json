@@ -1,7 +1,7 @@
 {
   "name": "@web-media-library/vue",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "files": [
     "dist"
@@ -21,8 +21,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@web-media-library/core": "workspace:^",
     "@vueuse/core": "^10.9.0",
+    "@web-media-library/core": "workspace:^",
     "vue": "^3.4.27"
   },
   "devDependencies": {
